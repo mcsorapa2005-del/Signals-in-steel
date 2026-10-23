@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signals in Steel</title>
+
+    <style>
+        /* --- DESIGN SYSTEM --- */
+        :root {
+            --bg-light: #c4deff;       
+            --pink-accent: #2c83d0;    
+            --orange-accent: #3ca6bb;  
+            --text-main: #241422;      
+            --text-muted: #23222f;     
+            --dark-blue: #130f24;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Montserrat', serif; 
+            background-color: var(--bg-light);
+            color: var(--text-main);
+            line-height: 1.8;
+            padding-bottom: 5rem;
+        }
+
+        /* --- TOP LOGO NAVIGATION --- */
+        .top-nav {
+            position: absolute;       
+            top: 2rem;                
+            left: 2rem;               
+            z-index: 100;             
+        }
+
+        .logo {
+            height: 80px;             
+            width: auto;              
+            display: block;
+            transition: opacity 0.3s ease;
+        }
+
+        .logo:hover {
+            opacity: 0.8;             
+        }
+
+        /* --- FULL WIDTH DARK BLUE BANNER --- */
+                /* --- FULL WIDTH IMAGE BANNER HEADER --- */
+        .article-header {
+            width: 100%;                  
+            margin: 0 0 4rem 0;               
+            padding: 12rem 2rem 8rem 2rem;     /* Slightly increased padding for visual depth */
+            text-align: center;
+            
+            /* ADD YOUR BACKGROUND IMAGE LINK OR FILENAME HERE */
+            background-image: linear-gradient(rgba(19, 15, 36, 0.65), rgba(19, 15, 36, 0.65)), url('divine machines.jpg');
+            
+            /* Formatting rules to make the background image look perfect */
+            background-size: cover;            /* Forces the photo to stretch and fit edge-to-edge without tearing */
+            background-position: center;       /* Keeps the image perfectly centered */
+            background-repeat: no-repeat;      /* Stops the image from tiling like wallpaper */
+            color: #00a4b3;                   
+        }
+
+
+        .article-header .category {
+            font-family: 'Montserrat', sans-serif;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.2em;
+            color: var(--orange-accent);      
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .article-header h1 {
+            color: #ffffff;                   
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            line-height: 1.1;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 1.5rem;
+        }
+
+        .article-header .meta-byline {
+            font-family: 'Courier New', Arial, sans-serif;
+            font-size: 0.9rem;
+            color: #a0aec0;                   
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 1rem 0;
+            display: inline-block;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        /* --- STRICTOR ARTICLE CONTAINER --- */
+        .article-body {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* --- PICTURE BLOCKS --- */
+       /* --- PICTURE BLOCKS WITH FLOATING SHADOW EFFECT --- */
+                /* --- PICTURE CONTAINERS (Stays completely still) --- */
+        .article-image-container {
+            margin: 4rem 0;
+            position: relative;
+            width: 100%;                    
+        }
+
+        /* --- IMAGES ONLY (This floats and casts the shadow) --- */
+        .article-image-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 4px;
+            
+            /* 1. Base shadow when sitting flat on the canvas */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            
+            /* 2. Animate the movement smoothly over 0.4 seconds */
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        /* 3. The trigger effect: Floats ONLY the image tag when hovered */
+        .article-image-container img:hover {
+            transform: translateY(-12px); /* Lifts the image upward */
+            box-shadow: 0 25px 50px rgba(19, 15, 36, 0.22); /* Spreads out the dark shadow beneath it */
+        }
+
+        /* --- CAPTIONS (Stays perfectly still beneath the floating photo) --- */
+        .caption {
+            font-family: 'Courier New', Arial, sans-serif;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+
+        .caption {
+            font-family: 'Courier New', Arial, sans-serif;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        /* --- WORD BLOCKS --- */
+        .article-text-block {
+            margin: 4rem auto;
+            max-width: 700px; 
+        }
+
+        .article-text-block p {
+            font-size: 1.2rem;
+            color: var(--text-main);
+            margin-bottom: 1.5rem;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            margin-top: 8rem;
+            text-align: center;
+            padding-top: 3rem;
+            border-top: 1px solid #ebdcd7;
+        }
+        
+        footer p {
+            font-family: 'Montserrat', Arial, sans-serif;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        /* --- RESPONSIVE ADJUSTMENTS --- */
+        @media (max-width: 600px) {
+            .article-header { padding: 8rem 1.5rem 4rem 1.5rem; }
+            .article-image-container { margin: 2.5rem 0; }
+            .article-text-block { margin: 2.5rem auto; }
+            .article-text-block p { font-size: 1.1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- UPPER LEFT LOGO NAVIGATION -->
+    <nav class="top-nav">
+        <a href="#">
+            <img src="Lpu logo.png" alt="Logo" class="logo">
+        </a>
+    </nav>
+
+    <!-- Header Banner Block -->
+    <header class="article-header">
+        <div class="category">My reverence of steel</div>
+        <h1>SIGNALS IN STEEL</h1>
+        <div class="meta-byline">
+            By <strong>Malcolm Chris S. Orapa</strong> &bull; October 2026
+        </div>
+    </header>
+
+    <!-- Main Editorial Content Body -->
+    <article class="article-body">
+
+        <!-- Top Featured Header Image -->
+        <div class="article-image-container">
+            <img src="Antenna.jpg" alt="Featured street lighting photography">
+            <p class="caption">It listens and it speaks, it's interconnected to everything in my hands.</p>
+        </div>
+
+        <!-- 1st Word Block Section -->
+        <div class="article-text-block">
+            <p>Cold, rigid, and inanimate. Yet it flows with data, I pass one everyday, and I say it's alive. After all, its blood is information.</p>
+        </div>
+
+        <!-- 2nd Image Block Section -->
+        <div class="article-image-container">
+            <img src="Utility_pole.jpg" alt="Perspective lines down a street layout">
+            <p class="caption">Silent, wired, and tall.</p>
+        </div>
+
+        <!-- 2nd Word Block Section -->
+        <div class="article-text-block">
+            <p>I have no need to wait for daylight, these towers have captured and controlled lightning as its conduits. I praise them for their power, but I keep my head low to avoid its surges.</p>
+        </div>
+
+        <!-- 3rd Image Block Section -->
+        <div class="article-image-container">
+            <img src="Air_conditioners.jpg" alt="Third photo representation">
+            <p class="caption">Cool icy relief, bringing the arctic to you.</p>
+        </div>
+
+        <!-- 3rd Word Block Section -->
+        <div class="article-text-block">
+            <p>No more hot blistering days or humid nights wil lever touch me again, I can ask for cold air at my request.</p>
+        </div>
+
+        <!-- 4th Image Block Section -->
+        <div class="article-image-container">
+            <img src="twin_cameras.jpg" alt="Fourth photo representation">
+            <p class="caption">Our faithful guardians.</p>
+        </div>
+
+        <!-- 4th Word Block Section -->
+        <div class="article-text-block">
+            <p>The gargoyles of old are no more, I have these machines protecting me with their unblinking gazes.</p>
+        </div>
+
+        <!-- 5th Image Block Section -->
+        <div class="article-image-container">
+            <img src="The_Crane.jpg" alt="Fifth photo representation">
+            <p class="caption">The tallest.</p>
+        </div>
+
+        <!-- 6th Word Block Section -->
+        <div class="article-text-block">
+            <p>Appearing silently in day and night, these titans forged my home, and countless others, with their strength alone.</p>
+        </div>
+
+   <!-- 6th Image Block Section -->
+        <div class="article-image-container">
+            <img src="the_humble_creature.jpg" alt="sixth photo representation">
+            <p class="caption">A break from steel</p>
+        </div>
+
+        <!-- 7th Word Block Section -->
+        <div class="article-text-block">
+            <p>One of the littlest residents residing under the machines, hopeful but unaware of the relevance of steel. It's my friend.</p>
+        </div>
+
+   <!-- 7th Image Block Section -->
+        <div class="article-image-container">
+            <img src="architecture.jpg" alt="seventh photo representation">
+            <p class="caption">A marvel.</p>
+        </div>
+
+        <!-- 8th Word Block Section -->
+        <div class="article-text-block">
+            <p>A portion of a larger structure. Hand-crafted by machines and the human mind, standing tall and perfect.</p>
+        </div>
+
+   <!-- 8th Image Block Section -->
+        <div class="article-image-container">
+            <img src="The_Dome.jpg" alt="eigth photo representation">
+            <p class="caption">The Giant in the horizon</p>
+        </div>
+
+        <!-- 5th Word Block Section -->
+        <div class="article-text-block">
+            <p>The steel mountain, a colossus of engineering. I do not know what this giant holds within...</p>
+        </div>
+
+        <!-- 8th Image Block Section -->
+        <div class="article-image-container">
+            <img src="Sparks.jpg" alt="ninth photo representation">
+            <p class="caption">The first flames</p>
+        </div>
+
+        <!-- 5th Word Block Section -->
+        <div class="article-text-block">
+            <p>Before the era of machines and giants, we had sparks and flames. Sparks that welded wire and steel together into the machines we have today.</p>
+        </div>
+
+        <!-- 8th Image Block Section -->
+        <div class="article-image-container">
+            <img src="The_true_signal.jpg" alt="tenth photo representation">
+            <p class="caption">The true signal.</p>
+        </div>
+
+        <!-- 5th Word Block Section -->
+        <div class="article-text-block">
+            <p>Despite the greatness of machines and steel giants, they all adhere to the one above. The Sun. Steel must be strong so as not to melt under its heat. Some machines even feed on its heat to power themselves for us, that is the power of the true signal.</p>
+        </div>
+
+
+        <!-- Footer -->
+        <footer>
+            <p>&copy; 2026 Signals in Steel. All rights reserved.</p>
+        </footer>
+
+    </article>
+
+</body>
+</html>
+</body>
+</html>
